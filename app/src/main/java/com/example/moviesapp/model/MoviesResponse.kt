@@ -1,4 +1,4 @@
-package com.example.moviesapp.models
+package com.example.moviesapp.model
 
 data class MoviesResponse(
     val errorMessage: String,

@@ -1,4 +1,4 @@
-package com.example.moviesapp.models
+package com.example.moviesapp.model
 
 data class Movie(
     val crew: String,

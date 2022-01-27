@@ -1,6 +1,6 @@
 package com.example.moviesapp.api
 
-import com.example.moviesapp.models.MoviesResponse
+import com.example.moviesapp.model.MoviesResponse
 import com.example.moviesapp.util.Constants.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
@@ -10,7 +10,7 @@ interface MoviesApi {
 
     @GET("{lang}/API/MostPopularMovies/${API_KEY}")
     suspend fun getMostPopularMovies(
-        @Path("lang") lang: String = "en"
+        @Path("lang") lang: String
     ): Response<MoviesResponse>
 
 }
