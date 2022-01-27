@@ -18,7 +18,7 @@ class MoviesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val repository = MovieRepository()
-        val viewModelFactory = MovieViewModelFactory(repository)
+        val viewModelFactory = MovieViewModelFactory(application, repository)
         movieViewModel = ViewModelProvider(this, viewModelFactory)[MovieViewModel::class.java]
     }
 }

@@ -3,7 +3,7 @@ package com.example.moviesapp
 import android.app.Application
 import timber.log.Timber
 
-class MovieApp : Application() {
+class MovieApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
