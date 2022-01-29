@@ -3,7 +3,6 @@ package com.example.moviesapp.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ActivityMoviesBinding
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.viewmodel.MovieViewModel

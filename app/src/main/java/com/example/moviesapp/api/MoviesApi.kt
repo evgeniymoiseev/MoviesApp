@@ -12,5 +12,4 @@ interface MoviesApi {
     suspend fun getMostPopularMovies(
         @Path("lang") lang: String
     ): Response<MoviesResponse>
-
 }
