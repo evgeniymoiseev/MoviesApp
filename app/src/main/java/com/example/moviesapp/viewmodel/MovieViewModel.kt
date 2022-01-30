@@ -15,7 +15,6 @@ import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import timber.log.Timber
 import java.io.IOException
 
 class MovieViewModel(
