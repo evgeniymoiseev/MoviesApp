@@ -15,26 +15,21 @@ import com.example.moviesapp.databinding.FragmentMostPopularMoviesBinding
 import com.example.moviesapp.extensions.hide
 import com.example.moviesapp.extensions.show
 import com.example.moviesapp.ui.MoviesActivity
+import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Resource
 import com.example.moviesapp.viewmodel.MovieViewModel
 import timber.log.Timber
 
-class MostPopularMoviesFragment : Fragment(R.layout.fragment_most_popular_movies) {
-
-    private var _binding: FragmentMostPopularMoviesBinding? = null
-    private val binding get() = _binding!!
+class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
 
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var movieAdapter: MovieAdapter
 
-    override fun onCreateView(
+    override fun initBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMostPopularMoviesBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        container: ViewGroup?
+    ): FragmentMostPopularMoviesBinding =
+        FragmentMostPopularMoviesBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,10 +62,5 @@ class MostPopularMoviesFragment : Fragment(R.layout.fragment_most_popular_movies
             layoutManager = GridLayoutManager(activity, 2)
             adapter = movieAdapter
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }
