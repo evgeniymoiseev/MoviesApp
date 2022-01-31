@@ -35,7 +35,7 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        movieViewModel = (requireActivity() as MoviesActivity).movieViewModel
+        movieViewModel = (activity as MoviesActivity).movieViewModel
 
         movieViewModel.movies.observe(viewLifecycleOwner) { resource ->
             when (resource) {
@@ -49,11 +49,10 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
                     }
                 }
                 is Resource.Error -> {
-
+                    TODO()
                 }
             }
         }
-
     }
 
     private fun setupRecyclerView() {
