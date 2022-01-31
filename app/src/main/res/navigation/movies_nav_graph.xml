@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/mostPopularMoviesFragment">
 
     <fragment
         android:id="@+id/mostPopularMoviesFragment"
+        tools:layout="@layout/fragment_most_popular_movies"
         android:name="com.example.moviesapp.ui.fragments.MostPopularMoviesFragment"
-        android:label="MostPopularMoviesFragment" />
+        android:label="MostPopularMoviesFragment" >
+        <action
+            android:id="@+id/action_mostPopularMoviesFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_mostPopularMoviesFragment_to_favoriteMoviesFragment"
+            app:destination="@id/favoriteMoviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        tools:layout="@layout/fragment_movie_detail"
+        android:name="com.example.moviesapp.ui.fragments.MovieDetailFragment"
+        android:label="MovieDetailFragment" >
+        <argument
+            android:name="movieArg"
+            app:argType="com.example.moviesapp.model.Movie" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_favorite_movies"
+        android:id="@+id/favoriteMoviesFragment"
+        android:name="com.example.moviesapp.ui.fragments.FavoriteMoviesFragment"
+        android:label="FavoriteMoviesFragment" />
 </navigation>
