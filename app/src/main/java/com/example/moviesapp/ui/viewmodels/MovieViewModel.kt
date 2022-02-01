@@ -11,10 +11,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.moviesapp.MovieApplication
 import com.example.moviesapp.model.most_popular_movies.MostPopularMoviesResponse
+import com.example.moviesapp.model.movies.Movie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import retrofit2.Retrofit
 import java.io.IOException
 
 class MovieViewModel(
@@ -22,9 +24,12 @@ class MovieViewModel(
     private val repository: MovieRepository
 ) : AndroidViewModel(app) {
 
+    private val _movies: MutableLiveData<Resource<Movie>> = MutableLiveData()
     private val _mostPopularMovies: MutableLiveData<Resource<MostPopularMoviesResponse>> =
         MutableLiveData()
-    val movies get() = _mostPopularMovies
+
+    val mostPopularMovies get() = _mostPopularMovies
+    val movies get() = _movies
 
     init {
         getMostPopularMovies()
@@ -35,8 +40,7 @@ class MovieViewModel(
         try {
             if (hasInternetConnection()) {
                 val retrofitResponse = repository.getMostPopularMovies()
-
-                _mostPopularMovies.postValue(handleMovieResponse(retrofitResponse))
+                _mostPopularMovies.postValue(handleMostPopularMovieResponse(retrofitResponse))
             } else {
                 _mostPopularMovies.postValue(Resource.Error("No internet connection"))
             }
@@ -48,7 +52,7 @@ class MovieViewModel(
         }
     }
 
-    private fun handleMovieResponse(retrofitResponse: Response<MostPopularMoviesResponse>)
+    private fun handleMostPopularMovieResponse(retrofitResponse: Response<MostPopularMoviesResponse>)
             : Resource<MostPopularMoviesResponse> {
         if (retrofitResponse.isSuccessful) {
             retrofitResponse.body()?.let { moviesResponse ->
@@ -56,6 +60,33 @@ class MovieViewModel(
             }
         }
         return Resource.Error(retrofitResponse.message())
+    }
+
+    fun getMovieById(id: String) = viewModelScope.launch {
+        _movies.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                val response = repository.getMovieById(id)
+                _movies.postValue(handleMovieResponse(response))
+            } else {
+                _movies.postValue(Resource.Error("No internet connection"))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                is IOException -> _mostPopularMovies.postValue(Resource.Error("Network Failure"))
+                else -> _mostPopularMovies.postValue(Resource.Error("Conversion Error"))
+            }
+        }
+    }
+
+    private fun handleMovieResponse(retrofitResponse: Response<Movie>)
+            : Resource<Movie> {
+        if (retrofitResponse.isSuccessful) {
+            retrofitResponse.body()?.let { movie ->
+                return Resource.Success(movie)
+            }
+        }
+        return Resource.Error("Unknown error, code: ${retrofitResponse.code()}")
     }
 
     private fun hasInternetConnection(): Boolean {

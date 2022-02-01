@@ -34,7 +34,7 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
         setupRecyclerView()
         movieViewModel = (activity as MoviesActivity).movieViewModel
 
-        movieViewModel.movies.observe(viewLifecycleOwner) { resource ->
+        movieViewModel.mostPopularMovies.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Loading -> {
                     binding.pbMostPopularMovies.show()
@@ -54,7 +54,7 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
 
     private fun onMovieClick(mostPopularMovie: MostPopularMovie) {
         val bundle = Bundle().apply {
-            putParcelable("movieArg", mostPopularMovie)
+            putString("movieId", mostPopularMovie.id)
         }
         findNavController().navigate(
             R.id.action_mostPopularMoviesFragment_to_movieDetailFragment,

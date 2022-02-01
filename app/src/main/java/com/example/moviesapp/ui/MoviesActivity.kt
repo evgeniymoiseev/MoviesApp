@@ -1,7 +1,9 @@
 package com.example.moviesapp.ui
 
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -18,17 +20,27 @@ class MoviesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMoviesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupBottomNavigationView(binding)
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        binding.bottomNavigationView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.movieDetailFragment -> {
+                    binding.bottomNavigationView.visibility = View.GONE
+                }
+                else -> {
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+                }
+            }
+        }
 
         val repository = MovieRepository()
         val viewModelFactory = MovieViewModelFactory(application, repository)
         movieViewModel = ViewModelProvider(this, viewModelFactory)[MovieViewModel::class.java]
     }
 
-    private fun setupBottomNavigationView(binding: ActivityMoviesBinding) {
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.fragmentContainer) as NavHostFragment
-        binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
-    }
 
 }
