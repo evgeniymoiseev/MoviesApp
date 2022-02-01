@@ -87,10 +87,12 @@ class MovieViewModel(
             : Resource<Movie> {
         if (retrofitResponse.isSuccessful) {
             retrofitResponse.body()?.let { movie ->
-                return Resource.Success(movie)
+                return if (movie.errorMessage != null) {
+                    Resource.Error(movie.errorMessage)
+                } else Resource.Success(movie)
             }
         }
-        return Resource.Error("Unknown error, code: ${retrofitResponse.code()}")
+        return Resource.Error(retrofitResponse.message())
     }
 
     private fun hasInternetConnection(): Boolean {
