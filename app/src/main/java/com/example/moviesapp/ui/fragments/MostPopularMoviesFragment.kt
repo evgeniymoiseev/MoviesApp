@@ -4,21 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesapp.MovieAdapter
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentMostPopularMoviesBinding
-import com.example.moviesapp.extensions.hide
-import com.example.moviesapp.extensions.show
+import com.example.moviesapp.model.most_popular_movies.MostPopularMovie
+import com.example.moviesapp.util.extensions.hide
+import com.example.moviesapp.util.extensions.show
 import com.example.moviesapp.ui.MoviesActivity
+import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Resource
-import com.example.moviesapp.viewmodel.MovieViewModel
-import timber.log.Timber
+import com.example.moviesapp.ui.viewmodels.MovieViewModel
 
 class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
 
@@ -45,7 +42,7 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
                 is Resource.Success -> {
                     resource.data?.let { moviesResponse ->
                         binding.pbMostPopularMovies.hide()
-                        movieAdapter.submitList(moviesResponse.movies)
+                        movieAdapter.submitList(moviesResponse.mostPopularMovies)
                     }
                 }
                 is Resource.Error -> {
@@ -55,8 +52,18 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
         }
     }
 
+    private fun onMovieClick(mostPopularMovie: MostPopularMovie) {
+        val bundle = Bundle().apply {
+            putParcelable("movieArg", mostPopularMovie)
+        }
+        findNavController().navigate(
+            R.id.action_mostPopularMoviesFragment_to_movieDetailFragment,
+            bundle
+        )
+    }
+
     private fun setupRecyclerView() {
-        movieAdapter = MovieAdapter()
+        movieAdapter = MovieAdapter { movie -> onMovieClick(movie) }
         binding.rvMostPopularMovies.apply {
             layoutManager = GridLayoutManager(activity, 2)
             adapter = movieAdapter

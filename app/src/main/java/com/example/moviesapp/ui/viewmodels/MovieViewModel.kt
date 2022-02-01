@@ -1,4 +1,4 @@
-package com.example.moviesapp.viewmodel
+package com.example.moviesapp.ui.viewmodels
 
 import android.app.Application
 import android.content.Context
@@ -10,7 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.moviesapp.MovieApplication
-import com.example.moviesapp.model.MoviesResponse
+import com.example.moviesapp.model.most_popular_movies.MostPopularMoviesResponse
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.util.Resource
 import kotlinx.coroutines.launch
@@ -22,32 +22,34 @@ class MovieViewModel(
     private val repository: MovieRepository
 ) : AndroidViewModel(app) {
 
-    private val _movies: MutableLiveData<Resource<MoviesResponse>> = MutableLiveData()
-    val movies get() = _movies
+    private val _mostPopularMovies: MutableLiveData<Resource<MostPopularMoviesResponse>> =
+        MutableLiveData()
+    val movies get() = _mostPopularMovies
 
     init {
         getMostPopularMovies()
     }
 
     private fun getMostPopularMovies() = viewModelScope.launch {
-        _movies.postValue(Resource.Loading())
+        _mostPopularMovies.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
                 val retrofitResponse = repository.getMostPopularMovies()
 
-                _movies.postValue(handleMovieResponse(retrofitResponse))
+                _mostPopularMovies.postValue(handleMovieResponse(retrofitResponse))
             } else {
-                _movies.postValue(Resource.Error("No internet connection"))
+                _mostPopularMovies.postValue(Resource.Error("No internet connection"))
             }
         } catch (t: Throwable) {
             when (t) {
-                is IOException -> _movies.postValue(Resource.Error("Network Failure"))
-                else -> _movies.postValue(Resource.Error("Conversion Error"))
+                is IOException -> _mostPopularMovies.postValue(Resource.Error("Network Failure"))
+                else -> _mostPopularMovies.postValue(Resource.Error("Conversion Error"))
             }
         }
     }
 
-    private fun handleMovieResponse(retrofitResponse: Response<MoviesResponse>): Resource<MoviesResponse> {
+    private fun handleMovieResponse(retrofitResponse: Response<MostPopularMoviesResponse>)
+            : Resource<MostPopularMoviesResponse> {
         if (retrofitResponse.isSuccessful) {
             retrofitResponse.body()?.let { moviesResponse ->
                 return Resource.Success(moviesResponse)

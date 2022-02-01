@@ -1,4 +1,4 @@
-package com.example.moviesapp.extensions
+package com.example.moviesapp.util.extensions
 
 import android.view.View
 import android.widget.ProgressBar
