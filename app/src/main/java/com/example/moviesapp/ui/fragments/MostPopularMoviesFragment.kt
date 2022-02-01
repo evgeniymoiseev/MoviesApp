@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviesapp.R
@@ -16,6 +17,7 @@ import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Resource
 import com.example.moviesapp.ui.viewmodels.MovieViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
 
@@ -46,7 +48,7 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
                     }
                 }
                 is Resource.Error -> {
-                    TODO()
+                    Snackbar.make(view,resource.errorMessage!!,Snackbar.LENGTH_SHORT).show()
                 }
             }
         }

@@ -56,7 +56,11 @@ class MovieViewModel(
             : Resource<MostPopularMoviesResponse> {
         if (retrofitResponse.isSuccessful) {
             retrofitResponse.body()?.let { moviesResponse ->
-                return Resource.Success(moviesResponse)
+                return if (moviesResponse.errorMessage.isNotEmpty()) {
+                    Resource.Error(moviesResponse.errorMessage)
+                } else {
+                    Resource.Success(moviesResponse)
+                }
             }
         }
         return Resource.Error(retrofitResponse.message())
