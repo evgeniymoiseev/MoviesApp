@@ -48,4 +48,67 @@ data class Movie(
     val writerList: List<Writer>,
     val writers: String,
     val year: String
-)
+) {
+
+    data class Actor(
+        val asCharacter: String,
+        val id: String,
+        val image: String,
+        val name: String
+    )
+
+    data class BoxOffice(
+        val budget: String,
+        val cumulativeWorldwideGross: String,
+        val grossUSA: String,
+        val openingWeekendUSA: String
+    )
+
+    data class Company(
+        val id: String,
+        val name: String
+    )
+
+    data class Country(
+        val key: String,
+        val value: String
+    )
+
+    data class Director(
+        val id: String,
+        val name: String
+    )
+
+    data class Genre(
+        val key: String,
+        val value: String
+    )
+
+    data class Language(
+        val key: String,
+        val value: String
+    )
+
+    data class Similar(
+        val directors: String,
+        val fullTitle: String,
+        val genres: String,
+        val id: String,
+        val imDbRating: String,
+        val image: String,
+        val plot: String,
+        val stars: String,
+        val title: String,
+        val year: String
+    )
+
+    data class Star(
+        val id: String,
+        val name: String
+    )
+
+    data class Writer(
+        val id: String,
+        val name: String
+    )
+}
