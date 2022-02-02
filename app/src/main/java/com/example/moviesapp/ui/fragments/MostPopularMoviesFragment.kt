@@ -67,7 +67,6 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
     private fun setupRecyclerView() {
         movieAdapter = MovieAdapter { movie -> onMovieClick(movie) }
         binding.rvMostPopularMovies.apply {
-            layoutManager = GridLayoutManager(activity, 2)
             adapter = movieAdapter
         }
     }

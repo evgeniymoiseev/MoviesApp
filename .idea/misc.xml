@@ -3,13 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_arrow_down.xml" value="0.14" />
+        <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_arrow_up.xml" value="0.14" />
+        <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_bookmark_add.xml" value="0.14" />
+        <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_bookmark_added.xml" value="0.14" />
         <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/layout-land/fragment_movie_detail.xml" value="0.176" />
         <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/activity_movies.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_favorite_movies.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_most_popular_movies.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_movie_detail.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/item_movie.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/item_movie.xml" value="0.264" />
         <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/movie_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/38096/AndroidStudioProjects/MoviesApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
       </map>
