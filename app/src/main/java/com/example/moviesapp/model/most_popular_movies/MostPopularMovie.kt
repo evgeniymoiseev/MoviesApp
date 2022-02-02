@@ -1,9 +1,5 @@
 package com.example.moviesapp.model.most_popular_movies
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class MostPopularMovie(
     val crew: String,
     val fullTitle: String,
@@ -15,4 +11,4 @@ data class MostPopularMovie(
     val rankUpDown: String,
     val title: String,
     val year: String
-) : Parcelable
+)
