@@ -1,9 +1,7 @@
 package com.example.moviesapp.ui.fragments.most_popular
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.moviesapp.MovieApplication
 import com.example.moviesapp.model.most_popular_movies.MostPopularMoviesResponse
 import com.example.moviesapp.model.most_popular_movies.SimpleMovie
@@ -13,6 +11,7 @@ import com.example.moviesapp.util.hasInternetConnection
 import com.example.moviesapp.util.mappers.SimpleMovieMapper
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import timber.log.Timber
 import java.io.IOException
 
 class MostPopularMoviesViewModel(
@@ -20,12 +19,21 @@ class MostPopularMoviesViewModel(
     private val repository: MovieRepository
 ) : AndroidViewModel(app) {
 
+    private val favoriteMoviesIdList: LiveData<List<String>> =
+        Transformations.map(repository.getDatabaseMovies()) { listFavoriteMovies ->
+            listFavoriteMovies.map { favoriteMovie -> favoriteMovie.id }
+        }
+    private val favoriteMoviesIdListObserver = Observer<List<String>> {
+        Timber.d(it.toString())
+    }
+
     private val _mostPopularMovies: MutableLiveData<Resource<List<SimpleMovie>>> =
         MutableLiveData()
     val mostPopularMovies get() = _mostPopularMovies
 
     init {
         getMostPopularMovies()
+        favoriteMoviesIdList.observeForever(favoriteMoviesIdListObserver)
     }
 
     private fun getMostPopularMovies() = viewModelScope.launch {
@@ -59,5 +67,18 @@ class MostPopularMoviesViewModel(
             }
         }
         return Resource.Error(retrofitResponse.message())
+    }
+
+    fun saveFavoriteMovie(movie: SimpleMovie) = viewModelScope.launch {
+        repository.saveFavoriteMovie(movie)
+    }
+
+    fun deleteFavoriteMovie(id: String) = viewModelScope.launch {
+        repository.deleteFavoriteMovie(id)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        favoriteMoviesIdList.removeObserver(favoriteMoviesIdListObserver)
     }
 }

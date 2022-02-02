@@ -19,6 +19,7 @@
         tools:src="@drawable/test_img" />
 
     <ImageView
+        android:id="@+id/ivFavorite"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_add_bookmark"

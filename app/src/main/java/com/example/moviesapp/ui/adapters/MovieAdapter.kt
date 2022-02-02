@@ -21,12 +21,15 @@ val diffUtilCallback = object : DiffUtil.ItemCallback<SimpleMovie>() {
     }
 }
 
-class MovieAdapter(private val onMovieClick: (SimpleMovie) -> Unit) :
+class MovieAdapter(
+    private val onMovieClick: (SimpleMovie) -> Unit,
+    private val onFavoriteClick: (SimpleMovie) -> Unit
+) :
     ListAdapter<SimpleMovie, MovieAdapter.MovieViewHolder>(diffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieViewHolder(binding, onMovieClick)
+        return MovieViewHolder(binding, onMovieClick, onFavoriteClick)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -35,16 +38,18 @@ class MovieAdapter(private val onMovieClick: (SimpleMovie) -> Unit) :
 
     class MovieViewHolder(
         private val binding: ItemMovieBinding,
-        private val onMovieClick: (SimpleMovie) -> Unit
+        private val onMovieClick: (SimpleMovie) -> Unit,
+        private val onFavoriteClick: (SimpleMovie) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var currentMovie: SimpleMovie? = null
 
         init {
             binding.ivPoster.setOnClickListener {
-                currentMovie?.let {
-                    onMovieClick(it)
-                }
+                currentMovie?.let { onMovieClick(it) }
+            }
+            binding.ivFavorite.setOnClickListener {
+                currentMovie?.let { onFavoriteClick(it) }
             }
         }
 

@@ -10,21 +10,19 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentMostPopularMoviesBinding
-import com.example.moviesapp.model.most_popular_movies.MostPopularMovie
+import com.example.moviesapp.db.MovieDatabase
 import com.example.moviesapp.model.most_popular_movies.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
-import com.example.moviesapp.ui.viewmodels.MovieViewModelFactory
 import com.example.moviesapp.util.Resource
 import com.example.moviesapp.util.extensions.hide
 import com.example.moviesapp.util.extensions.show
-import com.example.moviesapp.util.mappers.SimpleMovieMapper
 import com.google.android.material.snackbar.Snackbar
 
 class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
 
-    private lateinit var movieViewModel: MostPopularMoviesViewModel
+    private lateinit var mostPopularMovieViewModel: MostPopularMoviesViewModel
     private lateinit var movieAdapter: MovieAdapter
 
     override fun initBinding(
@@ -35,15 +33,16 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupRecyclerView()
-        val repository = MovieRepository()
-        val viewModelFactory =
-            MostPopularMoviesViewModelFactory(requireActivity().application, repository)
-        movieViewModel =
-            ViewModelProvider(this, viewModelFactory)[MostPopularMoviesViewModel::class.java]
 
-        movieViewModel.mostPopularMovies.observe(viewLifecycleOwner) { resource ->
+        val database = MovieDatabase(requireActivity().applicationContext)
+        val repository = MovieRepository(database)
+        val factory =
+            MostPopularMoviesViewModelFactory(requireActivity().application, repository)
+        mostPopularMovieViewModel =
+            ViewModelProvider(this, factory)[MostPopularMoviesViewModel::class.java]
+
+        mostPopularMovieViewModel.mostPopularMovies.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Loading -> {
                     binding.pbMostPopularMovies.show()
@@ -71,8 +70,15 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
         )
     }
 
+    private fun onFavoriteClick(movie: SimpleMovie) {
+        mostPopularMovieViewModel.saveFavoriteMovie(movie)
+    }
+
     private fun setupRecyclerView() {
-        movieAdapter = MovieAdapter { movie -> onMovieClick(movie) }
+        movieAdapter = MovieAdapter(
+            { movie -> onMovieClick(movie) },
+            { movie -> onFavoriteClick(movie) }
+        )
         val dividerItemDecoration = DividerItemDecoration(activity, RecyclerView.VERTICAL)
         dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.divider_drawable, null))
         binding.rvMostPopularMovies.apply {

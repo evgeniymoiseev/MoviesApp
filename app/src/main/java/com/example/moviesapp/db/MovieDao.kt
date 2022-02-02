@@ -2,7 +2,6 @@ package com.example.moviesapp.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.moviesapp.model.most_popular_movies.SimpleMovie
@@ -13,7 +12,7 @@ interface MovieDao {
     @Insert
     suspend fun insert(movie: SimpleMovie)
 
-    @Delete
+    @Query("DELETE FROM movies WHERE id=:id")
     suspend fun delete(id: String)
 
     @Query("SELECT * FROM movies")

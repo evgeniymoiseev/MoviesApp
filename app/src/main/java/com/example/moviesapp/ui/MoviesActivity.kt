@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ActivityMoviesBinding
+import com.example.moviesapp.db.MovieDatabase
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.viewmodels.MovieViewModel
 import com.example.moviesapp.ui.viewmodels.MovieViewModelFactory
@@ -37,7 +38,8 @@ class MoviesActivity : AppCompatActivity() {
             }
         }
 
-        val repository = MovieRepository()
+        val database = MovieDatabase(applicationContext)
+        val repository = MovieRepository(database)
         val viewModelFactory = MovieViewModelFactory(application, repository)
         movieViewModel = ViewModelProvider(this, viewModelFactory)[MovieViewModel::class.java]
     }

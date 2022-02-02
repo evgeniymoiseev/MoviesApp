@@ -1,5 +1,5 @@
 package com.example.moviesapp.util.mappers
 
-interface Mapper<S, D> {
-    fun map(source: S): D
+interface Mapper<I, O> {
+    fun map(input: I): O
 }
