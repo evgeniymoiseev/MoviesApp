@@ -1,21 +1,14 @@
 package com.example.moviesapp.ui
 
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ActivityMoviesBinding
-import com.example.moviesapp.db.MovieDatabase
-import com.example.moviesapp.repository.MovieRepository
-import com.example.moviesapp.ui.viewmodels.MovieViewModel
-import com.example.moviesapp.ui.viewmodels.MovieViewModelFactory
 
 class MoviesActivity : AppCompatActivity() {
-    lateinit var movieViewModel: MovieViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +30,5 @@ class MoviesActivity : AppCompatActivity() {
                 }
             }
         }
-
-        val database = MovieDatabase(applicationContext)
-        val repository = MovieRepository(database)
-        val viewModelFactory = MovieViewModelFactory(application, repository)
-        movieViewModel = ViewModelProvider(this, viewModelFactory)[MovieViewModel::class.java]
     }
-
-
 }

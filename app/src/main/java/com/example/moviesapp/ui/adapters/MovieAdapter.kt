@@ -46,7 +46,7 @@ class MovieAdapter(
         private var currentMovie: SimpleMovie? = null
 
         init {
-            binding.ivPoster.setOnClickListener {
+            binding.root.setOnClickListener {
                 currentMovie?.let { onMovieClick(it) }
             }
             binding.ivFavorite.setOnClickListener {
