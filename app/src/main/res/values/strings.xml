@@ -6,4 +6,5 @@
     <string name="directors">Directors:</string>
     <string name="stars">Stars:</string>
     <string name="add_to_watchlist">+ Add to Watchlist</string>
+    <string name="rating_star_image">Rating star image</string>
 </resources>

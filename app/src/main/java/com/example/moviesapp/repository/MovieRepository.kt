@@ -16,7 +16,10 @@ class MovieRepository(
 
     fun getDatabaseMovies() = db.getMoviesDao().getMovies()
 
+    fun getDatabaseMovieById(id: String) = db.getMoviesDao().getMovieById(id)
+
     suspend fun saveFavoriteMovie(movie: SimpleMovie) = db.getMoviesDao().insert(movie)
 
     suspend fun deleteFavoriteMovie(id: String) = db.getMoviesDao().delete(id)
+
 }

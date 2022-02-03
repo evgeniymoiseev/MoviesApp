@@ -27,7 +27,7 @@ class MostPopularMoviesViewModel(
 
     private val _mostPopularMovies: MutableLiveData<Resource<List<SimpleMovie>>> =
         MutableLiveData()
-    val mostPopularMovies get() = _mostPopularMovies
+    val mostPopularMovies get() = _mostPopularMovies as LiveData<Resource<List<SimpleMovie>>>
 
     init {
         getMostPopularMovies()
