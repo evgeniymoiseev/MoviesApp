@@ -19,12 +19,14 @@ class MostPopularMoviesViewModel(
     private val repository: MovieRepository
 ) : AndroidViewModel(app) {
 
-    private val favoriteMoviesIdList: LiveData<List<String>> =
+    val favoriteMoviesIdListLiveData: LiveData<List<String>> =
         Transformations.map(repository.getDatabaseMovies()) { listFavoriteMovies ->
             listFavoriteMovies.map { favoriteMovie -> favoriteMovie.id }
         }
-    private val favoriteMoviesIdListObserver = Observer<List<String>> {
-        Timber.d(it.toString())
+    private var favoriteMoviesIdList = emptyList<String>()
+    private val favoriteMoviesIdListObserver = Observer<List<String>> { currentIds ->
+        favoriteMoviesIdList = currentIds
+        _mostPopularMovies.postValue(updateMostPopularMovies())
     }
 
     private val _mostPopularMovies: MutableLiveData<Resource<List<SimpleMovie>>> =
@@ -33,7 +35,7 @@ class MostPopularMoviesViewModel(
 
     init {
         getMostPopularMovies()
-        favoriteMoviesIdList.observeForever(favoriteMoviesIdListObserver)
+        favoriteMoviesIdListLiveData.observeForever(favoriteMoviesIdListObserver)
     }
 
     private fun getMostPopularMovies() = viewModelScope.launch {
@@ -60,8 +62,9 @@ class MostPopularMoviesViewModel(
                 return if (body.errorMessage.isNotEmpty()) {
                     Resource.Error(body.errorMessage)
                 } else {
-                    Resource.Success(body.mostPopularMovies.map {
-                        SimpleMovieMapper().map(it)
+                    Resource.Success(body.mostPopularMovies.map { mostPopularMovie ->
+                        val isInFavorites = mostPopularMovie.id in favoriteMoviesIdList
+                        SimpleMovieMapper(isInFavorites).map(mostPopularMovie)
                     })
                 }
             }
@@ -77,8 +80,23 @@ class MostPopularMoviesViewModel(
         repository.deleteFavoriteMovie(id)
     }
 
+    private fun updateMostPopularMovies(): Resource<List<SimpleMovie>> {
+        _mostPopularMovies.value?.data?.let {
+            val newList = it.toMutableList()
+            for (i in newList.indices) {
+                if (newList[i].id in favoriteMoviesIdList) {
+                    newList[i] = newList[i].copy(isFavorite = true)
+                } else {
+                    newList[i] = newList[i].copy(isFavorite = false)
+                }
+            }
+            return Resource.Success(newList)
+        }
+        return Resource.Loading()
+    }
+
     override fun onCleared() {
         super.onCleared()
-        favoriteMoviesIdList.removeObserver(favoriteMoviesIdListObserver)
+        favoriteMoviesIdListLiveData.removeObserver(favoriteMoviesIdListObserver)
     }
 }

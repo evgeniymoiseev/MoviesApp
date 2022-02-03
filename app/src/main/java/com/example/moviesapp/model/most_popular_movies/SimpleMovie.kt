@@ -14,4 +14,5 @@ data class SimpleMovie(
     val year: String,
     val rating: String,
     val isEmptyRating: Boolean,
+    val isFavorite: Boolean,
 )

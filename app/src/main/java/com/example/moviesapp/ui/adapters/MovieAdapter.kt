@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ItemMovieBinding
 import com.example.moviesapp.model.most_popular_movies.MostPopularMovie
 import com.example.moviesapp.model.most_popular_movies.SimpleMovie
@@ -63,6 +64,13 @@ class MovieAdapter(
             binding.tvYear.text = simpleMovie.year
             binding.tvRating.text = simpleMovie.rating
             binding.ivStar.visibility = if (simpleMovie.isEmptyRating) View.GONE else View.VISIBLE
+            binding.ivFavorite.setImageResource(
+                if (simpleMovie.isFavorite) {
+                    R.drawable.ic_added_bookmark
+                } else {
+                    R.drawable.ic_add_bookmark
+                }
+            )
         }
     }
 }

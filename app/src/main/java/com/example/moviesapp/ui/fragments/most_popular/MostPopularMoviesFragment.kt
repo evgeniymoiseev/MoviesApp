@@ -19,6 +19,7 @@ import com.example.moviesapp.util.Resource
 import com.example.moviesapp.util.extensions.hide
 import com.example.moviesapp.util.extensions.show
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 
 class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
 
@@ -71,7 +72,11 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
     }
 
     private fun onFavoriteClick(movie: SimpleMovie) {
-        mostPopularMovieViewModel.saveFavoriteMovie(movie)
+        if (movie.isFavorite) {
+            mostPopularMovieViewModel.deleteFavoriteMovie(movie.id)
+        } else {
+            mostPopularMovieViewModel.saveFavoriteMovie(movie.copy(isFavorite = true))
+        }
     }
 
     private fun setupRecyclerView() {
