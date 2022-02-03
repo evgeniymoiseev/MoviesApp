@@ -3,4 +3,7 @@
     <string name="poster">Poster</string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
+    <string name="directors">Directors:</string>
+    <string name="stars">Stars:</string>
+    <string name="add_to_watchlist">+ Add to Watchlist</string>
 </resources>
