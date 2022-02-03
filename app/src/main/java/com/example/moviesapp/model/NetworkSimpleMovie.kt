@@ -1,6 +1,6 @@
-package com.example.moviesapp.model.most_popular_movies
+package com.example.moviesapp.model
 
-data class MostPopularMovie(
+data class NetworkSimpleMovie(
     val crew: String,
     val fullTitle: String,
     val id: String,

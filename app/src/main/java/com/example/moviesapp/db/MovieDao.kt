@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.moviesapp.model.most_popular_movies.SimpleMovie
+import com.example.moviesapp.model.SimpleMovie
 
 @Dao
 interface MovieDao {

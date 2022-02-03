@@ -1,4 +1,4 @@
-package com.example.moviesapp.model.most_popular_movies
+package com.example.moviesapp.model
 
 import androidx.annotation.DrawableRes
 import androidx.room.Entity

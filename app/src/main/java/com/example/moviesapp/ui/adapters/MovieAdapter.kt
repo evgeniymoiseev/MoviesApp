@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ItemMovieBinding
-import com.example.moviesapp.model.most_popular_movies.MostPopularMovie
-import com.example.moviesapp.model.most_popular_movies.SimpleMovie
+import com.example.moviesapp.model.SimpleMovie
 
 val diffUtilCallback = object : DiffUtil.ItemCallback<SimpleMovie>() {
     override fun areItemsTheSame(oldItem: SimpleMovie, newItem: SimpleMovie): Boolean {

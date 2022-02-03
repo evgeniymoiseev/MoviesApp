@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentFavoriteMoviesBinding
 import com.example.moviesapp.db.MovieDatabase
-import com.example.moviesapp.model.most_popular_movies.SimpleMovie
+import com.example.moviesapp.model.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment

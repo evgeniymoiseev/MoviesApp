@@ -1,12 +1,12 @@
 package com.example.moviesapp.util.mappers
 
 import com.example.moviesapp.R
-import com.example.moviesapp.model.most_popular_movies.MostPopularMovie
-import com.example.moviesapp.model.most_popular_movies.SimpleMovie
+import com.example.moviesapp.model.NetworkSimpleMovie
+import com.example.moviesapp.model.SimpleMovie
 
 class SimpleMovieMapper(private val isInFavorites: Boolean) :
-    Mapper<MostPopularMovie, SimpleMovie> {
-    override fun map(input: MostPopularMovie): SimpleMovie {
+    Mapper<NetworkSimpleMovie, SimpleMovie> {
+    override fun map(input: NetworkSimpleMovie): SimpleMovie {
         var rankInt = 0
         try {
             rankInt = input.rankUpDown.toInt()

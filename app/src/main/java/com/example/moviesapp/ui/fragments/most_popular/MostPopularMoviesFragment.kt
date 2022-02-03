@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentMostPopularMoviesBinding
 import com.example.moviesapp.db.MovieDatabase
-import com.example.moviesapp.model.most_popular_movies.SimpleMovie
+import com.example.moviesapp.model.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
@@ -19,7 +19,6 @@ import com.example.moviesapp.util.Resource
 import com.example.moviesapp.util.extensions.hide
 import com.example.moviesapp.util.extensions.show
 import com.google.android.material.snackbar.Snackbar
-import timber.log.Timber
 
 class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
 

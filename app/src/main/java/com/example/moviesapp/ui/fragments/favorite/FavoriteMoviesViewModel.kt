@@ -2,7 +2,7 @@ package com.example.moviesapp.ui.fragments.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moviesapp.model.most_popular_movies.SimpleMovie
+import com.example.moviesapp.model.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
 import kotlinx.coroutines.launch
 

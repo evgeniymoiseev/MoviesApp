@@ -2,7 +2,7 @@ package com.example.moviesapp.repository
 
 import com.example.moviesapp.api.RetrofitInstance
 import com.example.moviesapp.db.MovieDatabase
-import com.example.moviesapp.model.most_popular_movies.SimpleMovie
+import com.example.moviesapp.model.SimpleMovie
 
 class MovieRepository(
     private val db: MovieDatabase

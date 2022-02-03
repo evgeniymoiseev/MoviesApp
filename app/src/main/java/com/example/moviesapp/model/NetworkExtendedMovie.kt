@@ -1,6 +1,6 @@
-package com.example.moviesapp.model.movies
+package com.example.moviesapp.model
 
-data class Movie(
+data class NetworkExtendedMovie(
     val actorList: List<Actor>,
     val awards: String,
     val boxOffice: BoxOffice,

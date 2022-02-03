@@ -3,15 +3,14 @@ package com.example.moviesapp.ui.fragments.most_popular
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.moviesapp.MovieApplication
-import com.example.moviesapp.model.most_popular_movies.MostPopularMoviesResponse
-import com.example.moviesapp.model.most_popular_movies.SimpleMovie
+import com.example.moviesapp.model.MostPopularMoviesResponse
+import com.example.moviesapp.model.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.util.Resource
 import com.example.moviesapp.util.hasInternetConnection
 import com.example.moviesapp.util.mappers.SimpleMovieMapper
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import timber.log.Timber
 import java.io.IOException
 
 class MostPopularMoviesViewModel(
@@ -60,7 +59,7 @@ class MostPopularMoviesViewModel(
                     Resource.Error(body.errorMessage)
                 } else {
                     val databaseMoviesIds = favoriteDatabaseMoviesList.map { it.id }
-                    Resource.Success(body.mostPopularMovies.map { mostPopularMovie ->
+                    Resource.Success(body.networkSimpleMovies.map { mostPopularMovie ->
                         val isInFavorites = mostPopularMovie.id in databaseMoviesIds
                         SimpleMovieMapper(isInFavorites).map(mostPopularMovie)
                     })
