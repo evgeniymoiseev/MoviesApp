@@ -51,7 +51,7 @@ class FavoriteMoviesFragment : BindingFragment<FragmentFavoriteMoviesBinding>() 
     }
 
     private fun onFavoriteClick(movie: SimpleMovie) {
-        favoriteMovieViewModel.saveFavoriteMovie(movie)
+        favoriteMovieViewModel.deleteFavoriteMovie(movie.id)
     }
 
     private fun setupRecyclerView() {

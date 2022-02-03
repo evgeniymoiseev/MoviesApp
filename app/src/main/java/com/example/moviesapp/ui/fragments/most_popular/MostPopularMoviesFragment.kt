@@ -38,10 +38,14 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
 
         val database = MovieDatabase(requireActivity().applicationContext)
         val repository = MovieRepository(database)
-        val factory =
-            MostPopularMoviesViewModelFactory(requireActivity().application, repository)
-        mostPopularMovieViewModel =
-            ViewModelProvider(this, factory)[MostPopularMoviesViewModel::class.java]
+        val factory = MostPopularMoviesViewModelFactory(
+            requireActivity().application,
+            repository
+        )
+        mostPopularMovieViewModel = ViewModelProvider(
+            this,
+            factory
+        )[MostPopularMoviesViewModel::class.java]
 
         mostPopularMovieViewModel.mostPopularMovies.observe(viewLifecycleOwner) { resource ->
             when (resource) {

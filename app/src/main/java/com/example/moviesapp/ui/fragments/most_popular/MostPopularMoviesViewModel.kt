@@ -19,13 +19,10 @@ class MostPopularMoviesViewModel(
     private val repository: MovieRepository
 ) : AndroidViewModel(app) {
 
-    val favoriteMoviesIdListLiveData: LiveData<List<String>> =
-        Transformations.map(repository.getDatabaseMovies()) { listFavoriteMovies ->
-            listFavoriteMovies.map { favoriteMovie -> favoriteMovie.id }
-        }
-    private var favoriteMoviesIdList = emptyList<String>()
-    private val favoriteMoviesIdListObserver = Observer<List<String>> { currentIds ->
-        favoriteMoviesIdList = currentIds
+    private val favoriteDatabaseMoviesLiveData = repository.getDatabaseMovies()
+    private var favoriteDatabaseMoviesList = emptyList<SimpleMovie>()
+    private val favoriteDatabaseMoviesObserver = Observer<List<SimpleMovie>> { databaseMovies ->
+        favoriteDatabaseMoviesList = databaseMovies
         _mostPopularMovies.postValue(updateMostPopularMovies())
     }
 
@@ -35,7 +32,7 @@ class MostPopularMoviesViewModel(
 
     init {
         getMostPopularMovies()
-        favoriteMoviesIdListLiveData.observeForever(favoriteMoviesIdListObserver)
+        favoriteDatabaseMoviesLiveData.observeForever(favoriteDatabaseMoviesObserver)
     }
 
     private fun getMostPopularMovies() = viewModelScope.launch {
@@ -62,8 +59,9 @@ class MostPopularMoviesViewModel(
                 return if (body.errorMessage.isNotEmpty()) {
                     Resource.Error(body.errorMessage)
                 } else {
+                    val databaseMoviesIds = favoriteDatabaseMoviesList.map { it.id }
                     Resource.Success(body.mostPopularMovies.map { mostPopularMovie ->
-                        val isInFavorites = mostPopularMovie.id in favoriteMoviesIdList
+                        val isInFavorites = mostPopularMovie.id in databaseMoviesIds
                         SimpleMovieMapper(isInFavorites).map(mostPopularMovie)
                     })
                 }
@@ -81,14 +79,12 @@ class MostPopularMoviesViewModel(
     }
 
     private fun updateMostPopularMovies(): Resource<List<SimpleMovie>> {
-        _mostPopularMovies.value?.data?.let {
-            val newList = it.toMutableList()
+        _mostPopularMovies.value?.data?.let { listMovies ->
+            val newList = listMovies.toMutableList()
+            val databaseMoviesIds = favoriteDatabaseMoviesList.map { it.id }
             for (i in newList.indices) {
-                if (newList[i].id in favoriteMoviesIdList) {
-                    newList[i] = newList[i].copy(isFavorite = true)
-                } else {
-                    newList[i] = newList[i].copy(isFavorite = false)
-                }
+                val isInFavorites = newList[i].id in databaseMoviesIds
+                newList[i] = newList[i].copy(isFavorite = isInFavorites)
             }
             return Resource.Success(newList)
         }
@@ -97,6 +93,6 @@ class MostPopularMoviesViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        favoriteMoviesIdListLiveData.removeObserver(favoriteMoviesIdListObserver)
+        favoriteDatabaseMoviesLiveData.removeObserver(favoriteDatabaseMoviesObserver)
     }
 }
