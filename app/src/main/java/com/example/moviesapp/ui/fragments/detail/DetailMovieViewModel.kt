@@ -32,6 +32,10 @@ class DetailMovieViewModel(
         getMovieById(id)
     }
 
+    fun saveMovie(movie: SimpleMovie) = viewModelScope.launch {
+        repository.saveFavoriteMovie(movie)
+    }
+
     private fun getMovieById(id: String) = viewModelScope.launch {
         _movieResource.postValue(Resource.Loading())
         try {

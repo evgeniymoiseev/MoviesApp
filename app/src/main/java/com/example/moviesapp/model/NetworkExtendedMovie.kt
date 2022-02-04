@@ -17,7 +17,7 @@ data class NetworkExtendedMovie(
     val genreList: List<Genre>,
     val genres: String,
     val id: String,
-    val imDbRating: String,
+    val imDbRating: String?,
     val imDbRatingVotes: String,
     val image: String,
     val images: Any,

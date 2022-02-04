@@ -15,6 +15,8 @@ import com.example.moviesapp.model.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
+import com.example.moviesapp.util.Constants.Companion.ID_BUNDLE_KEY
+import com.example.moviesapp.util.Constants.Companion.TITLE_BUNDLE_KEY
 
 class FavoriteMoviesFragment : BindingFragment<FragmentFavoriteMoviesBinding>() {
     private lateinit var movieAdapter: MovieAdapter
@@ -42,7 +44,8 @@ class FavoriteMoviesFragment : BindingFragment<FragmentFavoriteMoviesBinding>() 
 
     private fun onMovieClick(movie: SimpleMovie) {
         val bundle = Bundle().apply {
-            putString("movieId", movie.id)
+            putString(ID_BUNDLE_KEY, movie.id)
+            putString(TITLE_BUNDLE_KEY, movie.title)
         }
         findNavController().navigate(
             R.id.action_favoriteMoviesFragment_to_movieDetailFragment,

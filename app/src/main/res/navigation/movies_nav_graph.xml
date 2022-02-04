@@ -26,6 +26,9 @@
         <argument
             android:name="movieId"
             app:argType="string" />
+        <argument
+            android:name="movieTitle"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/favoriteMoviesFragment"
@@ -39,5 +42,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.moviesapp.ui.fragments.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search_movies" >
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 </navigation>

@@ -6,16 +6,26 @@
     android:layout_height="match_parent"
     android:background="@color/primaryColor">
 
+    <SearchView
+        android:id="@+id/svMovies"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@id/rvSearchMovies"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFavoriteMovies"
+        android:id="@+id/rvSearchMovies"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="2"
+        app:layout_constraintTop_toBottomOf="@id/svMovies"
+        tools:itemCount="1"
         tools:listitem="@layout/item_movie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor">
+    android:background="@color/primaryColor">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -12,6 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxEms="10"
+        android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Енканто: Світ магії" />
@@ -60,10 +63,10 @@
     <ImageView
         android:id="@+id/ivStar"
         android:layout_width="30dp"
-        android:contentDescription="@string/rating_star_image"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="@string/rating_star_image"
         android:src="@drawable/ic_star"
         app:layout_constraintStart_toEndOf="@id/cvImage"
         app:layout_constraintTop_toTopOf="@+id/cvImage" />
@@ -129,7 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/secondaryColor"
+        android:backgroundTint="@color/button_save_color_selector"
         android:text="@string/add_to_watchlist"
         android:textColor="@color/primaryDarkColor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,4 +158,13 @@
             tools:text="After her father, step-mother, step-sister and little brother are killed by her father's employers, the 12-year-old daughter of an abject drug dealer manages to take refuge in the apartment of a professional hitman who at her request teaches her the methods of his job so she can take her revenge on the corrupt DEA agent who ruined her life by killing her beloved brother." />
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/pbDetailLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btAdd" />
 </androidx.constraintlayout.widget.ConstraintLayout>
