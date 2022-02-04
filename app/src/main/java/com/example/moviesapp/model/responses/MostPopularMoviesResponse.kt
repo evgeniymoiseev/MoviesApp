@@ -1,8 +1,9 @@
-package com.example.moviesapp.model
+package com.example.moviesapp.model.responses
 
+import com.example.moviesapp.model.network.NetworkSimpleMovie
 import com.google.gson.annotations.SerializedName
 
 data class MostPopularMoviesResponse(
-    @SerializedName("errorMessage") val errorMessage: String,
+    val errorMessage: String,
     @SerializedName("items") val networkSimpleMovies: List<NetworkSimpleMovie>
 )

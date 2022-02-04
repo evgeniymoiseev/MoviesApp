@@ -1,4 +1,4 @@
-package com.example.moviesapp.model
+package com.example.moviesapp.model.local
 
 import androidx.annotation.DrawableRes
 

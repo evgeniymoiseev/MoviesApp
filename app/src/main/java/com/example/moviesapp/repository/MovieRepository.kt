@@ -2,7 +2,7 @@ package com.example.moviesapp.repository
 
 import com.example.moviesapp.api.RetrofitInstance
 import com.example.moviesapp.db.MovieDatabase
-import com.example.moviesapp.model.SimpleMovie
+import com.example.moviesapp.model.local.SimpleMovie
 
 class MovieRepository(
     private val db: MovieDatabase
@@ -13,6 +13,9 @@ class MovieRepository(
 
     suspend fun getMovieById(id: String, lang: String = "en") =
         RetrofitInstance.api.getMovieById(lang, id)
+
+    suspend fun searchMovies(expression: String, lang: String = "en") =
+        RetrofitInstance.api.searchMovies(lang, expression)
 
     fun getDatabaseMovies() = db.getMoviesDao().getMovies()
 

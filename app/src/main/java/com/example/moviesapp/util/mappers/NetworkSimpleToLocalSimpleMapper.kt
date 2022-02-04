@@ -1,10 +1,10 @@
 package com.example.moviesapp.util.mappers
 
 import com.example.moviesapp.R
-import com.example.moviesapp.model.NetworkSimpleMovie
-import com.example.moviesapp.model.SimpleMovie
+import com.example.moviesapp.model.network.NetworkSimpleMovie
+import com.example.moviesapp.model.local.SimpleMovie
 
-class SimpleMovieMapper(private val isInFavorites: Boolean) :
+class NetworkSimpleToLocalSimpleMapper(private val isInFavorites: Boolean) :
     Mapper<NetworkSimpleMovie, SimpleMovie> {
     override fun map(input: NetworkSimpleMovie): SimpleMovie {
         var rankInt = 0

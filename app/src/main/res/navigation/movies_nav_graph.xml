@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mostPopularMoviesFragment"
-        android:name="com.example.moviesapp.ui.fragments.most_popular.MostPopularMoviesFragment"
+        android:name="com.example.moviesapp.ui.fragments.most_popular.MostPopularFragment"
         android:label="MostPopularMoviesFragment"
         tools:layout="@layout/fragment_most_popular_movies">
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteMoviesFragment"
-        android:name="com.example.moviesapp.ui.fragments.favorite.FavoriteMoviesFragment"
+        android:name="com.example.moviesapp.ui.fragments.favorite.FavoriteFragment"
         android:label="FavoriteMoviesFragment"
         tools:layout="@layout/fragment_favorite_movies">
         <action

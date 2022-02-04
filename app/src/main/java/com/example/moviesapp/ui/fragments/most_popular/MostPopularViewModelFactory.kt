@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.moviesapp.repository.MovieRepository
 
-class MostPopularMoviesViewModelFactory(
+class MostPopularViewModelFactory(
     private val app: Application,
     private val repository: MovieRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MostPopularMoviesViewModel(app, repository) as T
+        return MostPopularViewModel(app, repository) as T
     }
 }

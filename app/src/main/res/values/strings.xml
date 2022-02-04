@@ -8,6 +8,6 @@
     <string name="rating_star_image">Rating star image</string>
     <string name="most_popular_movies">Most popular movies</string>
     <string name="watch_list">Watch list</string>
-    <string name="search">Search</string>
     <string name="popular">Popular</string>
+    <string name="search">Search</string>
 </resources>

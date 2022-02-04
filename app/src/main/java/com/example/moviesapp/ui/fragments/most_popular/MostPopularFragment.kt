@@ -11,20 +11,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentMostPopularMoviesBinding
 import com.example.moviesapp.db.MovieDatabase
-import com.example.moviesapp.model.SimpleMovie
+import com.example.moviesapp.model.local.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Constants.Companion.ID_BUNDLE_KEY
 import com.example.moviesapp.util.Constants.Companion.TITLE_BUNDLE_KEY
-import com.example.moviesapp.util.Resource
+import com.example.moviesapp.util.Event
 import com.example.moviesapp.util.extensions.hide
 import com.example.moviesapp.util.extensions.show
 import com.google.android.material.snackbar.Snackbar
 
-class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
+class MostPopularFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
 
-    private lateinit var mostPopularMovieViewModel: MostPopularMoviesViewModel
+    private lateinit var mostPopularViewModel: MostPopularViewModel
     private lateinit var movieAdapter: MovieAdapter
 
     override fun initBinding(
@@ -39,27 +39,24 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
 
         val database = MovieDatabase(requireActivity().applicationContext)
         val repository = MovieRepository(database)
-        val factory = MostPopularMoviesViewModelFactory(
+        val factory = MostPopularViewModelFactory(
             requireActivity().application,
             repository
         )
-        mostPopularMovieViewModel = ViewModelProvider(
-            this,
-            factory
-        )[MostPopularMoviesViewModel::class.java]
+        mostPopularViewModel = ViewModelProvider(this, factory)[MostPopularViewModel::class.java]
 
-        mostPopularMovieViewModel.mostPopularMovies.observe(viewLifecycleOwner) { resource ->
+        mostPopularViewModel.mostPopularMovies.observe(viewLifecycleOwner) { resource ->
             when (resource) {
-                is Resource.Loading -> {
+                is Event.Loading -> {
                     binding.pbMostPopularMovies.show()
                 }
-                is Resource.Success -> {
+                is Event.Success -> {
                     resource.data?.let { listMovies ->
                         binding.pbMostPopularMovies.hide()
                         movieAdapter.submitList(listMovies)
                     }
                 }
-                is Resource.Error -> {
+                is Event.Error -> {
                     Snackbar.make(view, resource.errorMessage!!, Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -79,9 +76,9 @@ class MostPopularMoviesFragment : BindingFragment<FragmentMostPopularMoviesBindi
 
     private fun onFavoriteClick(movie: SimpleMovie) {
         if (movie.isFavorite) {
-            mostPopularMovieViewModel.deleteFavoriteMovie(movie.id)
+            mostPopularViewModel.deleteFavoriteMovie(movie.id)
         } else {
-            mostPopularMovieViewModel.saveFavoriteMovie(movie.copy(isFavorite = true))
+            mostPopularViewModel.saveFavoriteMovie(movie.copy(isFavorite = true))
         }
     }
 

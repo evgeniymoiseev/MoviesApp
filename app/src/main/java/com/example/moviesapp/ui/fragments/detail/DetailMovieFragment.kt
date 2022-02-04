@@ -9,11 +9,11 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.moviesapp.databinding.FragmentMovieDetailBinding
 import com.example.moviesapp.db.MovieDatabase
-import com.example.moviesapp.model.ExtendedMovie
+import com.example.moviesapp.model.local.ExtendedMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.fragments.base.BindingFragment
-import com.example.moviesapp.util.Resource
-import com.example.moviesapp.util.mappers.ExtendedToSimpleMapper
+import com.example.moviesapp.util.Event
+import com.example.moviesapp.util.mappers.LocalExtendedToLocalSimpleMapper
 import com.google.android.material.snackbar.Snackbar
 
 class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
@@ -44,16 +44,16 @@ class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
 
         detailMovieViewModel.movieResource.observe(viewLifecycleOwner) { resource ->
             when (resource) {
-                is Resource.Loading -> {
+                is Event.Loading -> {
                     binding.pbDetailLoading.visibility = View.VISIBLE
                 }
-                is Resource.Success -> {
+                is Event.Success -> {
                     binding.pbDetailLoading.visibility = View.GONE
                     resource.data?.let { movie ->
                         bindLayout(movie)
                     }
                 }
-                is Resource.Error -> {
+                is Event.Error -> {
                     binding.pbDetailLoading.visibility = View.GONE
                     Snackbar.make(view, resource.errorMessage!!, Snackbar.LENGTH_LONG).show()
                 }
@@ -76,7 +76,7 @@ class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
         binding.tvStars.text = movie.stars
         binding.tvPlot.text = movie.plot
         binding.btAdd.setOnClickListener {
-            detailMovieViewModel.saveMovie(ExtendedToSimpleMapper(isFavorite = true).map(movie))
+            detailMovieViewModel.saveMovie(LocalExtendedToLocalSimpleMapper(isFavorite = true).map(movie))
         }
 
     }

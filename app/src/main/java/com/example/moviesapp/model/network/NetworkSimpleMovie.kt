@@ -1,4 +1,4 @@
-package com.example.moviesapp.model
+package com.example.moviesapp.model.network
 
 data class NetworkSimpleMovie(
     val crew: String,

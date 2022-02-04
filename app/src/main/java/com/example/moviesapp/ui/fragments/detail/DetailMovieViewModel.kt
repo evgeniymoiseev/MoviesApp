@@ -6,13 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.moviesapp.MovieApplication
-import com.example.moviesapp.model.ExtendedMovie
-import com.example.moviesapp.model.NetworkExtendedMovie
-import com.example.moviesapp.model.SimpleMovie
+import com.example.moviesapp.model.local.ExtendedMovie
+import com.example.moviesapp.model.network.NetworkExtendedMovie
+import com.example.moviesapp.model.local.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
-import com.example.moviesapp.util.Resource
+import com.example.moviesapp.util.Event
 import com.example.moviesapp.util.hasInternetConnection
-import com.example.moviesapp.util.mappers.ExtendedMovieMapper
+import com.example.moviesapp.util.mappers.NetworkExtendedToLocalExtendedMapper
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -25,8 +25,8 @@ class DetailMovieViewModel(
 
     val movieInDatabase = repository.getDatabaseMovieById(id)
 
-    private val _movieResource: MutableLiveData<Resource<ExtendedMovie>> = MutableLiveData()
-    val movieResource get() = _movieResource as LiveData<Resource<ExtendedMovie>>
+    private val _movieEvent: MutableLiveData<Event<ExtendedMovie>> = MutableLiveData()
+    val movieResource get() = _movieEvent as LiveData<Event<ExtendedMovie>>
 
     init {
         getMovieById(id)
@@ -37,35 +37,35 @@ class DetailMovieViewModel(
     }
 
     private fun getMovieById(id: String) = viewModelScope.launch {
-        _movieResource.postValue(Resource.Loading())
+        _movieEvent.postValue(Event.Loading())
         try {
             if (hasInternetConnection(getApplication<MovieApplication>())) {
                 val retrofitResponse = repository.getMovieById(id)
-                _movieResource.postValue(handleMovieResponse(retrofitResponse))
+                _movieEvent.postValue(handleMovieResponse(retrofitResponse))
             } else {
-                _movieResource.postValue(Resource.Error("No internet connection"))
+                _movieEvent.postValue(Event.Error("No internet connection"))
             }
         } catch (t: Throwable) {
             when (t) {
-                is IOException -> _movieResource.postValue(
-                    Resource.Error("Network Failure")
+                is IOException -> _movieEvent.postValue(
+                    Event.Error("Network Failure")
                 )
-                else -> _movieResource.postValue(Resource.Error("Conversion Error"))
+                else -> _movieEvent.postValue(Event.Error("Conversion Error"))
             }
         }
     }
 
     private fun handleMovieResponse(retrofitResponse: Response<NetworkExtendedMovie>)
-            : Resource<ExtendedMovie> {
+            : Event<ExtendedMovie> {
         if (retrofitResponse.isSuccessful) {
             retrofitResponse.body()?.let { body ->
                 return if (!body.errorMessage.isNullOrEmpty()) {
-                    Resource.Error(body.errorMessage)
+                    Event.Error(body.errorMessage)
                 } else {
-                    Resource.Success(ExtendedMovieMapper().map(body))
+                    Event.Success(NetworkExtendedToLocalExtendedMapper().map(body))
                 }
             }
         }
-        return Resource.Error(retrofitResponse.message())
+        return Event.Error(retrofitResponse.message())
     }
 }

@@ -6,5 +6,6 @@ class Constants {
         const val BASE_URL = "https://imdb-api.com/"
         const val TITLE_BUNDLE_KEY = "movieTitle"
         const val ID_BUNDLE_KEY = "movieId"
+        const val SEARCH_DELAY = 500L
     }
 }

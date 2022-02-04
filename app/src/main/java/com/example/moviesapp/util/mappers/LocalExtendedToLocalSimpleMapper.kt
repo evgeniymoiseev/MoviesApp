@@ -1,9 +1,9 @@
 package com.example.moviesapp.util.mappers
 
-import com.example.moviesapp.model.ExtendedMovie
-import com.example.moviesapp.model.SimpleMovie
+import com.example.moviesapp.model.local.ExtendedMovie
+import com.example.moviesapp.model.local.SimpleMovie
 
-class ExtendedToSimpleMapper(private val isFavorite: Boolean) : Mapper<ExtendedMovie, SimpleMovie> {
+class LocalExtendedToLocalSimpleMapper(private val isFavorite: Boolean) : Mapper<ExtendedMovie, SimpleMovie> {
     override fun map(input: ExtendedMovie): SimpleMovie {
         return SimpleMovie(
             id = input.id,

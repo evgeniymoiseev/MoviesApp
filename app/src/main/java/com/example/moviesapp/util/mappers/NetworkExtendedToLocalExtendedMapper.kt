@@ -1,10 +1,10 @@
 package com.example.moviesapp.util.mappers
 
 import com.example.moviesapp.R
-import com.example.moviesapp.model.ExtendedMovie
-import com.example.moviesapp.model.NetworkExtendedMovie
+import com.example.moviesapp.model.local.ExtendedMovie
+import com.example.moviesapp.model.network.NetworkExtendedMovie
 
-class ExtendedMovieMapper : Mapper<NetworkExtendedMovie, ExtendedMovie> {
+class NetworkExtendedToLocalExtendedMapper : Mapper<NetworkExtendedMovie, ExtendedMovie> {
     override fun map(input: NetworkExtendedMovie): ExtendedMovie {
         val isEmptyRating = input.imDbRating.isNullOrEmpty()
         val ratingStr = if (isEmptyRating) "" else input.imDbRating.toString()

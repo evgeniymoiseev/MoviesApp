@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.moviesapp.repository.MovieRepository
 import kotlinx.coroutines.launch
 
-class FavoriteMoviesViewModel(
+class FavoriteViewModel(
     private val repository: MovieRepository
 ) : ViewModel() {
 
