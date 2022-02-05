@@ -17,6 +17,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import timber.log.Timber
 import java.io.IOException
 
 class SearchViewModel(
@@ -32,10 +33,12 @@ class SearchViewModel(
         job?.cancel()
         job = viewModelScope.launch {
             _searchEvent.postValue(Event.Loading())
-            //delay(SEARCH_DELAY)
+            delay(SEARCH_DELAY)
             try {
                 if (hasInternetConnection(getApplication<MovieApplication>())) {
+                    Timber.d("request expression = $expression")
                     val retrofitResponse = repository.searchMovies(expression)
+                    Timber.d("response")
                     _searchEvent.postValue(handleSearchMovieResponse(retrofitResponse))
                 } else {
                     _searchEvent.postValue(Event.Error("No internet connection"))
@@ -46,21 +49,20 @@ class SearchViewModel(
                     else -> _searchEvent.postValue(Event.Error("Conversion Error"))
                 }
             }
-
         }
     }
 
     private fun handleSearchMovieResponse(retrofitResponse: Response<SearchMoviesResponse>):
             Event<List<ShortMovie>> {
+        Timber.d("start handling")
         if (retrofitResponse.isSuccessful) {
             retrofitResponse.body()?.let { body ->
                 return if (body.errorMessage.isNotEmpty()) {
                     Event.Error(body.errorMessage)
                 } else {
                     val mapper = NetworkShortToLocalShortMapper()
-                    val listShortMovies = body.networkShortMovies.map {
-                        mapper.map(it)
-                    }
+                    val listShortMovies = body.networkShortMovies.map { mapper.map(it) }
+                    Timber.d("end handling")
                     Event.Success(listShortMovies)
                 }
             }

@@ -19,6 +19,7 @@ import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Constants
 import com.example.moviesapp.util.Event
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 
 class SearchFragment : BindingFragment<FragmentSearchMoviesBinding>() {
 

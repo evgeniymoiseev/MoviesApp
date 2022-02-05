@@ -30,7 +30,7 @@ class MostPopularViewModel(
     val mostPopularMovies get() = _mostPopularMovies as LiveData<Event<List<SimpleMovie>>>
 
     init {
-        getMostPopularMovies()
+        //getMostPopularMovies()
         favoriteDatabaseMoviesLiveData.observeForever(favoriteDatabaseMoviesObserver)
     }
 
