@@ -22,14 +22,14 @@ class NetworkExtendedToLocalExtendedMapper : Mapper<NetworkExtendedMovie, Extend
         return ExtendedMovie(
             id = input.id,
             title = input.title,
-            year = input.year,
+            year = input.year ?: "",
             runtime = input.runtimeStr,
             imageSrc = input.image,
             isEmptyRating = isEmptyRating,
             rating = ratingStr,
             directors = directorsStr,
             stars = starsStr,
-            plot = input.plot,
+            plot = input.plot ?: "",
             upDownDrawable = R.drawable.ic_arrow_none,
             rank = "-"
         )

@@ -19,7 +19,6 @@ import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Constants
 import com.example.moviesapp.util.Event
 import com.google.android.material.snackbar.Snackbar
-import timber.log.Timber
 
 class SearchFragment : BindingFragment<FragmentSearchMoviesBinding>() {
 
@@ -71,14 +70,16 @@ class SearchFragment : BindingFragment<FragmentSearchMoviesBinding>() {
     }
 
     private fun onMovieClick(movie: ShortMovie) {
-        val bundle = Bundle().apply {
-            putString(Constants.ID_BUNDLE_KEY, movie.id)
-            putString(Constants.TITLE_BUNDLE_KEY, movie.title)
+        if (!movie.description.contains("Series")) {
+            val bundle = Bundle().apply {
+                putString(Constants.ID_BUNDLE_KEY, movie.id)
+                putString(Constants.TITLE_BUNDLE_KEY, movie.title)
+            }
+            findNavController().navigate(
+                R.id.action_searchFragment_to_movieDetailFragment,
+                bundle
+            )
         }
-        findNavController().navigate(
-            R.id.action_searchFragment_to_movieDetailFragment,
-            bundle
-        )
     }
 
     private fun setupRecyclerView() {

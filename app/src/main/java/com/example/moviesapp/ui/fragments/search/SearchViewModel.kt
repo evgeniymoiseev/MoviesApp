@@ -1,6 +1,7 @@
 package com.example.moviesapp.ui.fragments.search
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,27 +27,31 @@ class SearchViewModel(
 ) : AndroidViewModel(app) {
 
     private var job: Job? = null
+    private var lastRequestExpression: String = ""
     private val _searchEvent: MutableLiveData<Event<List<ShortMovie>>> = MutableLiveData()
     val searchEvent get() = _searchEvent as LiveData<Event<List<ShortMovie>>>
 
     fun searchMovies(expression: String) {
-        job?.cancel()
-        job = viewModelScope.launch {
-            _searchEvent.postValue(Event.Loading())
-            delay(SEARCH_DELAY)
-            try {
-                if (hasInternetConnection(getApplication<MovieApplication>())) {
-                    Timber.d("request expression = $expression")
-                    val retrofitResponse = repository.searchMovies(expression)
-                    Timber.d("response")
-                    _searchEvent.postValue(handleSearchMovieResponse(retrofitResponse))
-                } else {
-                    _searchEvent.postValue(Event.Error("No internet connection"))
-                }
-            } catch (t: Throwable) {
-                when (t) {
-                    is IOException -> _searchEvent.postValue(Event.Error("Network Failure"))
-                    else -> _searchEvent.postValue(Event.Error("Conversion Error"))
+        if (expression != lastRequestExpression && expression.length > 1) {
+            job?.cancel()
+            job = viewModelScope.launch {
+                _searchEvent.postValue(Event.Loading())
+                delay(SEARCH_DELAY)
+                try {
+                    if (hasInternetConnection(getApplication<MovieApplication>())) {
+                        Timber.d("request expression = $expression")
+                        val retrofitResponse = repository.searchMovies(expression)
+                        Timber.d("response")
+                        _searchEvent.postValue(handleSearchMovieResponse(retrofitResponse))
+                        lastRequestExpression = expression
+                    } else {
+                        _searchEvent.postValue(Event.Error("No internet connection"))
+                    }
+                } catch (t: Throwable) {
+                    when (t) {
+                        is IOException -> _searchEvent.postValue(Event.Error("Network Failure"))
+                        else -> _searchEvent.postValue(Event.Error("Conversion Error"))
+                    }
                 }
             }
         }

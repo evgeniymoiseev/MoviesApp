@@ -10,12 +10,12 @@ data class NetworkExtendedMovie(
     val countries: String,
     val countryList: List<Country>,
     val directorList: List<Director>,
-    val directors: String,
+    val directors: String?,
     val errorMessage: String?,
     val fullCast: Any,
     val fullTitle: String,
-    val genreList: List<Genre>,
-    val genres: String,
+    val genreList: List<Genre>?,
+    val genres: String?,
     val id: String,
     val imDbRating: String?,
     val imDbRatingVotes: String,
@@ -27,7 +27,7 @@ data class NetworkExtendedMovie(
     val languages: String,
     val metacriticRating: String,
     val originalTitle: String,
-    val plot: String,
+    val plot: String?,
     val plotLocal: String,
     val plotLocalIsRtl: Boolean,
     val posters: Any,
@@ -47,7 +47,7 @@ data class NetworkExtendedMovie(
     val wikipedia: Any,
     val writerList: List<Writer>,
     val writers: String,
-    val year: String
+    val year: String?
 ) {
 
     data class Actor(

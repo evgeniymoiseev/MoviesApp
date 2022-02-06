@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor">
+    android:background="@color/primaryDarkColor">
 
     <ProgressBar
         android:id="@+id/pbSearch"
@@ -17,11 +17,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:hint="@string/search"
         android:id="@+id/etMovies"
+        android:inputType="text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:background="@drawable/search_background"
+        android:hint="@string/search"
+        android:padding="16dp"
+        android:textColor="@color/primaryTextColor"
+        android:textColorHint="@color/secondaryTextColor"
         app:layout_constraintBottom_toTopOf="@id/rvSearchMovies"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
