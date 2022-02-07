@@ -56,13 +56,18 @@ class SearchFragment : BindingFragment<FragmentSearchMoviesBinding>() {
                 is Event.Loading -> {
                     movieAdapter.submitList(emptyList())
                     binding.pbSearch.visibility = View.VISIBLE
+                    binding.tvNoResults.visibility = View.INVISIBLE
                 }
                 is Event.Success -> {
                     binding.pbSearch.visibility = View.GONE
                     movieAdapter.submitList(event.data!!)
+                    binding.tvNoResults.visibility =
+                        if (event.data.isNotEmpty()) View.INVISIBLE else View.VISIBLE
                 }
                 is Event.Error -> {
                     binding.pbSearch.visibility = View.GONE
+                    movieAdapter.submitList(emptyList())
+                    binding.tvNoResults.visibility = View.INVISIBLE
                     Snackbar.make(view, event.errorMessage.toString(), Snackbar.LENGTH_LONG).show()
                 }
             }
@@ -70,7 +75,7 @@ class SearchFragment : BindingFragment<FragmentSearchMoviesBinding>() {
     }
 
     private fun onMovieClick(movie: ShortMovie) {
-        if (!movie.description.contains("Series")) {
+        if (movie.isMovie) {
             val bundle = Bundle().apply {
                 putString(Constants.ID_BUNDLE_KEY, movie.id)
                 putString(Constants.TITLE_BUNDLE_KEY, movie.title)

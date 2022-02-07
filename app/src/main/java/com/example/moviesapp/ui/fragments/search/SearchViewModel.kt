@@ -39,9 +39,7 @@ class SearchViewModel(
                 delay(SEARCH_DELAY)
                 try {
                     if (hasInternetConnection(getApplication<MovieApplication>())) {
-                        Timber.d("request expression = $expression")
                         val retrofitResponse = repository.searchMovies(expression)
-                        Timber.d("response")
                         _searchEvent.postValue(handleSearchMovieResponse(retrofitResponse))
                         lastRequestExpression = expression
                     } else {
@@ -59,7 +57,6 @@ class SearchViewModel(
 
     private fun handleSearchMovieResponse(retrofitResponse: Response<SearchMoviesResponse>):
             Event<List<ShortMovie>> {
-        Timber.d("start handling")
         if (retrofitResponse.isSuccessful) {
             retrofitResponse.body()?.let { body ->
                 return if (body.errorMessage.isNotEmpty()) {
@@ -67,7 +64,6 @@ class SearchViewModel(
                 } else {
                     val mapper = NetworkShortToLocalShortMapper()
                     val listShortMovies = body.networkShortMovies.map { mapper.map(it) }
-                    Timber.d("end handling")
                     Event.Success(listShortMovies)
                 }
             }

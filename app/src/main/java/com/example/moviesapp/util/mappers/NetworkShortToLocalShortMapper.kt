@@ -9,7 +9,8 @@ class NetworkShortToLocalShortMapper : Mapper<NetworkShortMovie, ShortMovie> {
             id = input.id,
             image = input.image,
             title = input.title,
-            description = input.description
+            description = input.description,
+            isMovie = !input.description.contains("Series")
         )
     }
 }

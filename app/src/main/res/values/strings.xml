@@ -10,4 +10,5 @@
     <string name="watch_list">Watch list</string>
     <string name="popular">Popular</string>
     <string name="search">Search</string>
+    <string name="there_is_no_results">No results</string>
 </resources>

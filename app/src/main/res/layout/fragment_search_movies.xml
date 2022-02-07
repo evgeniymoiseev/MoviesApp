@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     android:background="@color/primaryDarkColor">
 
+    <TextView
+        android:id="@+id/tvNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/there_is_no_results"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etMovies" />
+
     <ProgressBar
         android:id="@+id/pbSearch"
         android:layout_width="wrap_content"
@@ -18,12 +31,12 @@
 
     <EditText
         android:id="@+id/etMovies"
-        android:inputType="text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/search_background"
         android:hint="@string/search"
+        android:inputType="text"
         android:padding="16dp"
         android:textColor="@color/primaryTextColor"
         android:textColorHint="@color/secondaryTextColor"
