@@ -1,5 +1,6 @@
 package com.example.moviesapp.ui.fragments.most_popular
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +16,14 @@ import com.example.moviesapp.model.local.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
+import com.example.moviesapp.util.Constants
 import com.example.moviesapp.util.Constants.Companion.ID_BUNDLE_KEY
 import com.example.moviesapp.util.Constants.Companion.TITLE_BUNDLE_KEY
 import com.example.moviesapp.util.Event
 import com.example.moviesapp.util.extensions.hide
 import com.example.moviesapp.util.extensions.show
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 
 class MostPopularFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
 
@@ -44,20 +47,21 @@ class MostPopularFragment : BindingFragment<FragmentMostPopularMoviesBinding>() 
             repository
         )
         mostPopularViewModel = ViewModelProvider(this, factory)[MostPopularViewModel::class.java]
+        mostPopularViewModel.getMostPopularMovies()
 
-        mostPopularViewModel.mostPopularMovies.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
+        mostPopularViewModel.mostPopularMovies.observe(viewLifecycleOwner) { event ->
+            when (event) {
                 is Event.Loading -> {
                     binding.pbMostPopularMovies.show()
                 }
                 is Event.Success -> {
-                    resource.data?.let { listMovies ->
+                    event.data?.let { listMovies ->
                         binding.pbMostPopularMovies.hide()
                         movieAdapter.submitList(listMovies)
                     }
                 }
                 is Event.Error -> {
-                    Snackbar.make(view, resource.errorMessage!!, Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(view, event.errorMessage!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ActivityMoviesBinding
 import com.example.moviesapp.util.Constants.Companion.TITLE_BUNDLE_KEY
+import timber.log.Timber
 
 class MoviesActivity : AppCompatActivity() {
 

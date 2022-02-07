@@ -11,4 +11,6 @@
     <string name="popular">Popular</string>
     <string name="search">Search</string>
     <string name="there_is_no_results">No results</string>
+    <string name="try_again">Try again</string>
+    <string name="error">Error</string>
 </resources>

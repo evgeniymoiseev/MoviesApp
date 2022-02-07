@@ -68,7 +68,7 @@ class SearchFragment : BindingFragment<FragmentSearchMoviesBinding>() {
                     binding.pbSearch.visibility = View.GONE
                     movieAdapter.submitList(emptyList())
                     binding.tvNoResults.visibility = View.INVISIBLE
-                    Snackbar.make(view, event.errorMessage.toString(), Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(view, event.errorMessage!!, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

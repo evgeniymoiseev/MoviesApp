@@ -30,11 +30,10 @@ class MostPopularViewModel(
     val mostPopularMovies get() = _mostPopularMovies as LiveData<Event<List<SimpleMovie>>>
 
     init {
-        //getMostPopularMovies()
         favoriteDatabaseMoviesLiveData.observeForever(favoriteDatabaseMoviesObserver)
     }
 
-    private fun getMostPopularMovies() = viewModelScope.launch {
+    fun getMostPopularMovies() = viewModelScope.launch {
         _mostPopularMovies.postValue(Event.Loading())
         try {
             if (hasInternetConnection(getApplication<MovieApplication>())) {
