@@ -1,10 +1,10 @@
 package com.example.moviesapp.ui.fragments.most_popular
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,14 +16,12 @@ import com.example.moviesapp.model.local.SimpleMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
-import com.example.moviesapp.util.Constants
 import com.example.moviesapp.util.Constants.Companion.ID_BUNDLE_KEY
 import com.example.moviesapp.util.Constants.Companion.TITLE_BUNDLE_KEY
 import com.example.moviesapp.util.Event
 import com.example.moviesapp.util.extensions.hide
 import com.example.moviesapp.util.extensions.show
 import com.google.android.material.snackbar.Snackbar
-import timber.log.Timber
 
 class MostPopularFragment : BindingFragment<FragmentMostPopularMoviesBinding>() {
 
@@ -92,7 +90,13 @@ class MostPopularFragment : BindingFragment<FragmentMostPopularMoviesBinding>() 
             { movie -> onFavoriteClick(movie) }
         )
         val dividerItemDecoration = DividerItemDecoration(activity, RecyclerView.VERTICAL)
-        dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.divider_drawable, null))
+        dividerItemDecoration.setDrawable(
+            ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.divider_drawable,
+                null
+            )!!
+        )
         binding.rvMostPopularMovies.apply {
             adapter = movieAdapter
             addItemDecoration(dividerItemDecoration)

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -63,7 +64,13 @@ class FavoriteFragment : BindingFragment<FragmentFavoriteMoviesBinding>() {
             { movie -> onFavoriteClick(movie) }
         )
         val dividerItemDecoration = DividerItemDecoration(activity, RecyclerView.VERTICAL)
-        dividerItemDecoration.setDrawable(resources.getDrawable(R.drawable.divider_drawable, null))
+        dividerItemDecoration.setDrawable(
+            ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.divider_drawable,
+                null
+            )!!
+        )
         binding.rvFavoriteMovies.apply {
             adapter = movieAdapter
             addItemDecoration(dividerItemDecoration)
