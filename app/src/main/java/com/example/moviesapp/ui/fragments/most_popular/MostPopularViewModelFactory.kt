@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.moviesapp.repository.MovieRepository
 
 class MostPopularViewModelFactory(
-    private val app: Application,
+    private val application: Application,
     private val repository: MovieRepository
 ) : ViewModelProvider.Factory {
+
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MostPopularViewModel(app, repository) as T
+        return MostPopularViewModel(application, repository) as T
     }
 }

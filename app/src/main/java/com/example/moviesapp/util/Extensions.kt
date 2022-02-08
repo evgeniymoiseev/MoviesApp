@@ -1,10 +1,16 @@
-package com.example.moviesapp.util.extensions
+package com.example.moviesapp.util
 
 import android.content.Context
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.TextView
+import com.example.moviesapp.MovieApplication
+import com.example.moviesapp.di.AppComponent
+
+val Context.appComponent: AppComponent
+    get() = when (this) {
+        is MovieApplication -> appComponent
+        else -> this.applicationContext.appComponent
+    }
 
 fun ProgressBar.hide() {
     visibility = View.GONE
@@ -12,15 +18,4 @@ fun ProgressBar.hide() {
 
 fun ProgressBar.show() {
     visibility = View.VISIBLE
-}
-
-fun LinearLayout.addTextView(context: Context, text: String) {
-    val params = LinearLayout.LayoutParams(
-        LinearLayout.LayoutParams.WRAP_CONTENT,
-        LinearLayout.LayoutParams.WRAP_CONTENT
-    )
-    val textView = TextView(context)
-    textView.text = text
-    textView.layoutParams = params
-    addView(textView)
 }

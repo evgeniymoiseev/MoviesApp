@@ -3,8 +3,8 @@ package com.example.moviesapp.ui.fragments.most_popular
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.moviesapp.MovieApplication
-import com.example.moviesapp.model.responses.MostPopularMoviesResponse
 import com.example.moviesapp.model.local.SimpleMovie
+import com.example.moviesapp.model.responses.MostPopularMoviesResponse
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.util.Event
 import com.example.moviesapp.util.hasInternetConnection

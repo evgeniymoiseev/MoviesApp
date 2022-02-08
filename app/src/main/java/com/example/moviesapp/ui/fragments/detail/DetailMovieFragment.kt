@@ -1,25 +1,35 @@
 package com.example.moviesapp.ui.fragments.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.moviesapp.databinding.FragmentMovieDetailBinding
-import com.example.moviesapp.db.MovieDatabase
 import com.example.moviesapp.model.local.ExtendedMovie
-import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Event
+import com.example.moviesapp.util.appComponent
 import com.example.moviesapp.util.mappers.LocalExtendedToLocalSimpleMapper
 import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 
 class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
 
+    @Inject
+    lateinit var factory: DetailMovieViewModelFactory.AssistFactory
     private val args: DetailMovieFragmentArgs by navArgs()
-    private lateinit var detailMovieViewModel: DetailMovieViewModel
+    private val detailMovieViewModel: DetailMovieViewModel by viewModels {
+        factory.create(args.movieId)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -27,20 +37,9 @@ class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
     ): FragmentMovieDetailBinding = FragmentMovieDetailBinding
         .inflate(inflater, container, false)
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val database = MovieDatabase(requireActivity().applicationContext)
-        val repository = MovieRepository(database)
-        val factory = DetailMovieViewModelFactory(
-            requireActivity().application,
-            repository,
-            args.movieId
-        )
-        detailMovieViewModel = ViewModelProvider(
-            this,
-            factory
-        )[DetailMovieViewModel::class.java]
 
         detailMovieViewModel.movieResource.observe(viewLifecycleOwner) { resource ->
             when (resource) {
@@ -76,7 +75,11 @@ class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
         binding.tvStars.text = movie.stars
         binding.tvPlot.text = movie.plot
         binding.btAdd.setOnClickListener {
-            detailMovieViewModel.saveMovie(LocalExtendedToLocalSimpleMapper(isFavorite = true).map(movie))
+            detailMovieViewModel.saveMovie(
+                LocalExtendedToLocalSimpleMapper(isFavorite = true).map(
+                    movie
+                )
+            )
         }
 
     }

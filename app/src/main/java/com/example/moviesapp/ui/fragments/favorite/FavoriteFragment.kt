@@ -1,27 +1,31 @@
 package com.example.moviesapp.ui.fragments.favorite
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentFavoriteMoviesBinding
-import com.example.moviesapp.db.MovieDatabase
 import com.example.moviesapp.model.local.SimpleMovie
-import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Constants.Companion.ID_BUNDLE_KEY
 import com.example.moviesapp.util.Constants.Companion.TITLE_BUNDLE_KEY
+import com.example.moviesapp.util.appComponent
+import javax.inject.Inject
 
 class FavoriteFragment : BindingFragment<FragmentFavoriteMoviesBinding>() {
+
+    @Inject
+    lateinit var factory: FavoriteViewModelFactory
     private lateinit var movieAdapter: MovieAdapter
-    private lateinit var favoriteMovieViewModel: FavoriteViewModel
+    private val favoriteMovieViewModel: FavoriteViewModel by viewModels { factory }
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -29,15 +33,15 @@ class FavoriteFragment : BindingFragment<FragmentFavoriteMoviesBinding>() {
     ): FragmentFavoriteMoviesBinding =
         FragmentFavoriteMoviesBinding.inflate(inflater, container, false)
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
-        val database = MovieDatabase(requireActivity().applicationContext)
-        val repository = MovieRepository(database)
-        val factory = FavoriteViewModelFactory(repository)
-        favoriteMovieViewModel =
-            ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
         favoriteMovieViewModel.getFavoriteMovies().observe(viewLifecycleOwner) { movieList ->
             movieAdapter.submitList(movieList)
         }

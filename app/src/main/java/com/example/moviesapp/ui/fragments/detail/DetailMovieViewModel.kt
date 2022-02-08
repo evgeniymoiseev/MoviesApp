@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.moviesapp.MovieApplication
 import com.example.moviesapp.model.local.ExtendedMovie
-import com.example.moviesapp.model.network.NetworkExtendedMovie
 import com.example.moviesapp.model.local.SimpleMovie
+import com.example.moviesapp.model.network.NetworkExtendedMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.util.Event
 import com.example.moviesapp.util.hasInternetConnection

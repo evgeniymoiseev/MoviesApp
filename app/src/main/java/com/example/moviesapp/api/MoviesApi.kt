@@ -1,7 +1,7 @@
 package com.example.moviesapp.api
 
-import com.example.moviesapp.model.responses.MostPopularMoviesResponse
 import com.example.moviesapp.model.network.NetworkExtendedMovie
+import com.example.moviesapp.model.responses.MostPopularMoviesResponse
 import com.example.moviesapp.model.responses.SearchMoviesResponse
 import com.example.moviesapp.util.Constants.Companion.API_KEY
 import retrofit2.Response
