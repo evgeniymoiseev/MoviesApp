@@ -20,7 +20,7 @@ class NetworkSimpleToLocalSimpleMapper(private val isInFavorites: Boolean) :
             rankInt < 0 -> R.drawable.ic_arrow_down
             else -> R.drawable.ic_arrow_none
         }
-        val isEmptyRating = input.imDbRating.isEmpty()
+        val isEmptyRating = input.imDbRating.isNullOrEmpty()
 
         return SimpleMovie(
             id = input.id,
@@ -29,7 +29,7 @@ class NetworkSimpleToLocalSimpleMapper(private val isInFavorites: Boolean) :
             rank = rankString,
             title = input.title,
             year = input.year,
-            rating = input.imDbRating,
+            rating = input.imDbRating ?: "",
             isEmptyRating = isEmptyRating,
             isFavorite = isInFavorites
         )

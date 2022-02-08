@@ -23,7 +23,7 @@ class NetworkExtendedToLocalExtendedMapper : Mapper<NetworkExtendedMovie, Extend
             id = input.id,
             title = input.title,
             year = input.year ?: "",
-            runtime = input.runtimeStr,
+            runtime = input.runtimeStr ?: "",
             imageSrc = input.image,
             isEmptyRating = isEmptyRating,
             rating = ratingStr,

@@ -34,7 +34,7 @@ data class NetworkExtendedMovie(
     val ratings: Any,
     val releaseDate: String,
     val runtimeMins: String,
-    val runtimeStr: String,
+    val runtimeStr: String?,
     val similars: List<Similar>,
     val starList: List<Star>,
     val stars: String,
