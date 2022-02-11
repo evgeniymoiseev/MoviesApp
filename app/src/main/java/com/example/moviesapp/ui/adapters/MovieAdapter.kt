@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ItemMovieBinding
 import com.example.moviesapp.model.local.SimpleMovie
@@ -58,7 +59,10 @@ class MovieAdapter(
         fun bind(simpleMovie: SimpleMovie) {
             currentMovie = simpleMovie
 
-            Glide.with(binding.root).load(simpleMovie.imageSrc).into(binding.ivPoster)
+            Glide.with(binding.root)
+                .load(simpleMovie.imageSrc)
+                .transition(withCrossFade())
+                .into(binding.ivPoster)
             binding.ivRankUpDown.setImageResource(simpleMovie.upDownDrawable)
             binding.tvRankUpDown.text = simpleMovie.rank
             binding.tvTitle.text = simpleMovie.title
