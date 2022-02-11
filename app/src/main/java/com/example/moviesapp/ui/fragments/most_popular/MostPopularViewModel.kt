@@ -7,8 +7,8 @@ import com.example.moviesapp.model.local.SimpleMovie
 import com.example.moviesapp.model.responses.MostPopularMoviesResponse
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.util.Event
+import com.example.moviesapp.util.extensions.toSimpleMovie
 import com.example.moviesapp.util.hasInternetConnection
-import com.example.moviesapp.util.mappers.NetworkSimpleToLocalSimpleMapper
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -60,7 +60,7 @@ class MostPopularViewModel(
                     val databaseMoviesIds = favoriteDatabaseMoviesList.map { it.id }
                     Event.Success(body.networkSimpleMovies.map { mostPopularMovie ->
                         val isInFavorites = mostPopularMovie.id in databaseMoviesIds
-                        NetworkSimpleToLocalSimpleMapper(isInFavorites).map(mostPopularMovie)
+                        mostPopularMovie.toSimpleMovie(isInFavorites)
                     })
                 }
             }

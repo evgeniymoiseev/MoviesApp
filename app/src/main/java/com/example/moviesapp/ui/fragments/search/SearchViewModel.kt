@@ -11,8 +11,8 @@ import com.example.moviesapp.model.responses.SearchMoviesResponse
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.util.Constants.Companion.SEARCH_DELAY
 import com.example.moviesapp.util.Event
+import com.example.moviesapp.util.extensions.toShortMovie
 import com.example.moviesapp.util.hasInternetConnection
-import com.example.moviesapp.util.mappers.NetworkShortToLocalShortMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -60,8 +60,7 @@ class SearchViewModel(
                 return if (body.errorMessage.isNotEmpty()) {
                     Event.Error(body.errorMessage)
                 } else {
-                    val mapper = NetworkShortToLocalShortMapper()
-                    val listShortMovies = body.networkShortMovies.map { mapper.map(it) }
+                    val listShortMovies = body.networkShortMovies.map { it.toShortMovie() }
                     Event.Success(listShortMovies)
                 }
             }

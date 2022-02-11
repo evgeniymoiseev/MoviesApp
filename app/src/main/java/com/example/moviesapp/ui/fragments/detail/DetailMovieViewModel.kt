@@ -11,8 +11,8 @@ import com.example.moviesapp.model.local.SimpleMovie
 import com.example.moviesapp.model.network.NetworkExtendedMovie
 import com.example.moviesapp.repository.MovieRepository
 import com.example.moviesapp.util.Event
+import com.example.moviesapp.util.extensions.toExtendedMovie
 import com.example.moviesapp.util.hasInternetConnection
-import com.example.moviesapp.util.mappers.NetworkExtendedToLocalExtendedMapper
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -62,7 +62,7 @@ class DetailMovieViewModel(
                 return if (!body.errorMessage.isNullOrEmpty()) {
                     Event.Error(body.errorMessage)
                 } else {
-                    Event.Success(NetworkExtendedToLocalExtendedMapper().map(body))
+                    Event.Success(body.toExtendedMovie())
                 }
             }
         }

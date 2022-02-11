@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.moviesapp.databinding.FragmentMovieDetailBinding
 import com.example.moviesapp.model.local.ExtendedMovie
 import com.example.moviesapp.ui.fragments.base.BindingFragment
@@ -15,7 +16,7 @@ import com.example.moviesapp.util.Event
 import com.example.moviesapp.util.extensions.appComponent
 import com.example.moviesapp.util.extensions.hide
 import com.example.moviesapp.util.extensions.show
-import com.example.moviesapp.util.mappers.LocalExtendedToLocalSimpleMapper
+import com.example.moviesapp.util.extensions.toSimpleMovie
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -70,7 +71,10 @@ class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
         binding.tvTitle.text = movie.title
         binding.tvYear.text = movie.year
         binding.tvRuntime.text = movie.runtime
-        Glide.with(requireView()).load(movie.imageSrc).into(binding.ivPoster)
+        Glide.with(requireView())
+            .load(movie.imageSrc)
+            .transition(withCrossFade())
+            .into(binding.ivPoster)
         binding.ivStar.visibility = if (movie.isEmptyRating) View.INVISIBLE else View.VISIBLE
         binding.tvRating.text = if (movie.isEmptyRating) "" else "${movie.rating}/10"
         binding.tvDirectors.text = movie.directors
@@ -78,9 +82,7 @@ class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
         binding.tvPlot.text = movie.plot
         binding.btAdd.setOnClickListener {
             detailMovieViewModel.saveMovie(
-                LocalExtendedToLocalSimpleMapper(isFavorite = true).map(
-                    movie
-                )
+                movie.toSimpleMovie(isFavorite = true)
             )
         }
     }
