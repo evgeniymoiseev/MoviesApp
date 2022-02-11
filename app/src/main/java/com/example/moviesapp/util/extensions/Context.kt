@@ -1,8 +1,6 @@
-package com.example.moviesapp.util
+package com.example.moviesapp.util.extensions
 
 import android.content.Context
-import android.view.View
-import android.widget.ProgressBar
 import com.example.moviesapp.MovieApplication
 import com.example.moviesapp.di.AppComponent
 
@@ -11,11 +9,3 @@ val Context.appComponent: AppComponent
         is MovieApplication -> appComponent
         else -> this.applicationContext.appComponent
     }
-
-fun ProgressBar.hide() {
-    visibility = View.GONE
-}
-
-fun ProgressBar.show() {
-    visibility = View.VISIBLE
-}

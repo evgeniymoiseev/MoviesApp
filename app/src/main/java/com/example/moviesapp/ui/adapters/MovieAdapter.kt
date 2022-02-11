@@ -11,21 +11,23 @@ import com.example.moviesapp.R
 import com.example.moviesapp.databinding.ItemMovieBinding
 import com.example.moviesapp.model.local.SimpleMovie
 
-val diffUtilCallback = object : DiffUtil.ItemCallback<SimpleMovie>() {
-    override fun areItemsTheSame(oldItem: SimpleMovie, newItem: SimpleMovie): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: SimpleMovie, newItem: SimpleMovie): Boolean {
-        return oldItem == newItem
-    }
-}
-
 class MovieAdapter(
     private val onMovieClick: (SimpleMovie) -> Unit,
     private val onFavoriteClick: (SimpleMovie) -> Unit
 ) :
-    ListAdapter<SimpleMovie, MovieAdapter.MovieViewHolder>(diffUtilCallback) {
+    ListAdapter<SimpleMovie, MovieAdapter.MovieViewHolder>(DIFF_CALLBACK) {
+
+    private companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SimpleMovie>() {
+            override fun areItemsTheSame(oldItem: SimpleMovie, newItem: SimpleMovie): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: SimpleMovie, newItem: SimpleMovie): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)

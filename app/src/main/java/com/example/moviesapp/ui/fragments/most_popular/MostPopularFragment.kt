@@ -18,9 +18,9 @@ import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Constants.Companion.ID_BUNDLE_KEY
 import com.example.moviesapp.util.Constants.Companion.TITLE_BUNDLE_KEY
 import com.example.moviesapp.util.Event
-import com.example.moviesapp.util.appComponent
-import com.example.moviesapp.util.hide
-import com.example.moviesapp.util.show
+import com.example.moviesapp.util.extensions.appComponent
+import com.example.moviesapp.util.extensions.hide
+import com.example.moviesapp.util.extensions.show
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 

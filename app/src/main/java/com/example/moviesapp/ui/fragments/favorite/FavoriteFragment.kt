@@ -17,7 +17,7 @@ import com.example.moviesapp.ui.adapters.MovieAdapter
 import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Constants.Companion.ID_BUNDLE_KEY
 import com.example.moviesapp.util.Constants.Companion.TITLE_BUNDLE_KEY
-import com.example.moviesapp.util.appComponent
+import com.example.moviesapp.util.extensions.appComponent
 import javax.inject.Inject
 
 class FavoriteFragment : BindingFragment<FragmentFavoriteMoviesBinding>() {

@@ -12,7 +12,9 @@ import com.example.moviesapp.databinding.FragmentMovieDetailBinding
 import com.example.moviesapp.model.local.ExtendedMovie
 import com.example.moviesapp.ui.fragments.base.BindingFragment
 import com.example.moviesapp.util.Event
-import com.example.moviesapp.util.appComponent
+import com.example.moviesapp.util.extensions.appComponent
+import com.example.moviesapp.util.extensions.hide
+import com.example.moviesapp.util.extensions.show
 import com.example.moviesapp.util.mappers.LocalExtendedToLocalSimpleMapper
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
@@ -44,16 +46,16 @@ class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
         detailMovieViewModel.movieResource.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Event.Loading -> {
-                    binding.pbDetailLoading.visibility = View.VISIBLE
+                    binding.pbDetailLoading.show()
                 }
                 is Event.Success -> {
-                    binding.pbDetailLoading.visibility = View.GONE
+                    binding.pbDetailLoading.hide()
                     resource.data?.let { movie ->
                         bindLayout(movie)
                     }
                 }
                 is Event.Error -> {
-                    binding.pbDetailLoading.visibility = View.GONE
+                    binding.pbDetailLoading.hide()
                     Snackbar.make(view, resource.errorMessage!!, Snackbar.LENGTH_LONG).show()
                 }
             }
@@ -81,6 +83,5 @@ class DetailMovieFragment : BindingFragment<FragmentMovieDetailBinding>() {
                 )
             )
         }
-
     }
 }
