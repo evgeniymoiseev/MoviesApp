@@ -9,20 +9,22 @@ import com.bumptech.glide.Glide
 import com.example.moviesapp.databinding.SimpleItemMovieBinding
 import com.example.moviesapp.model.local.ShortMovie
 
-val diffUtilCallbackShortMovie = object : DiffUtil.ItemCallback<ShortMovie>() {
-    override fun areItemsTheSame(oldItem: ShortMovie, newItem: ShortMovie): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: ShortMovie, newItem: ShortMovie): Boolean {
-        return oldItem == newItem
-    }
-}
-
 class ShortMovieAdapter(
     private val onMovieClick: (ShortMovie) -> Unit,
 ) :
-    ListAdapter<ShortMovie, ShortMovieAdapter.MovieViewHolder>(diffUtilCallbackShortMovie) {
+    ListAdapter<ShortMovie, ShortMovieAdapter.MovieViewHolder>(DIFF_CALLBACK) {
+
+    private companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ShortMovie>() {
+            override fun areItemsTheSame(oldItem: ShortMovie, newItem: ShortMovie): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: ShortMovie, newItem: ShortMovie): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = SimpleItemMovieBinding.inflate(

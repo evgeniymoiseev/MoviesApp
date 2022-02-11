@@ -49,7 +49,6 @@ data class NetworkExtendedMovie(
     val writers: String,
     val year: String?
 ) {
-
     data class Actor(
         val asCharacter: String,
         val id: String,
