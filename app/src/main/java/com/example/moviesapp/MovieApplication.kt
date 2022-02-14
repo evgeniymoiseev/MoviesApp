@@ -14,7 +14,6 @@ class MovieApplication : Application() {
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
 
         appComponent = DaggerAppComponent.builder()
-            .context(applicationContext)
             .application(this)
             .build()
     }

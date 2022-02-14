@@ -1,5 +1,6 @@
 package com.example.moviesapp.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.moviesapp.api.MoviesApi
@@ -14,9 +15,9 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(context: Context): MovieDatabase {
+    fun provideDatabase(application: Application): MovieDatabase {
         return Room.databaseBuilder(
-            context,
+            application.applicationContext,
             MovieDatabase::class.java,
             "movie_db.db"
         ).build()
