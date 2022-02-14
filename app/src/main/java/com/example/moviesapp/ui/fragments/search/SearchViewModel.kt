@@ -9,7 +9,6 @@ import com.example.moviesapp.MovieApplication
 import com.example.moviesapp.model.local.ShortMovie
 import com.example.moviesapp.model.responses.SearchMoviesResponse
 import com.example.moviesapp.repository.MovieRepository
-import com.example.moviesapp.util.Constants.Companion.SEARCH_DELAY
 import com.example.moviesapp.util.Event
 import com.example.moviesapp.util.extensions.toShortMovie
 import com.example.moviesapp.util.hasInternetConnection
@@ -23,6 +22,10 @@ class SearchViewModel(
     app: Application,
     private val repository: MovieRepository
 ) : AndroidViewModel(app) {
+
+    companion object {
+        private const val SEARCH_DELAY = 500L
+    }
 
     private var job: Job? = null
     private var lastRequestExpression: String = ""

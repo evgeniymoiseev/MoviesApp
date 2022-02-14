@@ -1,20 +1,19 @@
 package com.example.moviesapp.di
 
-import android.os.Build
-import android.os.Debug
 import com.example.moviesapp.api.MoviesApi
-import com.example.moviesapp.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import javax.inject.Singleton
 
 @Module
 class NetworkModule {
+    companion object {
+        private const val BASE_URL = "https://imdb-api.com/"
+    }
 
     @Provides
     fun provideConverterFactory(): GsonConverterFactory {

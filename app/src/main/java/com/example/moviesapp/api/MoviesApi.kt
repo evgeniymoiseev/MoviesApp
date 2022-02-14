@@ -3,12 +3,14 @@ package com.example.moviesapp.api
 import com.example.moviesapp.model.network.NetworkExtendedMovie
 import com.example.moviesapp.model.responses.MostPopularMoviesResponse
 import com.example.moviesapp.model.responses.SearchMoviesResponse
-import com.example.moviesapp.util.Constants.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface MoviesApi {
+    companion object {
+        private const val API_KEY = "k_lxdb55ol"
+    }
 
     @GET("{lang}/API/MostPopularMovies/${API_KEY}")
     suspend fun getMostPopularMovies(
